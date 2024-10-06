@@ -18,6 +18,7 @@ pub(crate) static CTX_TERA: LazyLock<Tera> = LazyLock::new(|| {
                 .expect("加载模板内容到模板引擎失败");
         }
     }
+    tera.autoescape_on(vec![]);
     tera
 });
 

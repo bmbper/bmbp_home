@@ -2,7 +2,9 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>{{AppName}}</title>
+        <title>{{systemAppTitle}}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="/bmbp/ui/home/image/favicon.ico" />
         <link rel="stylesheet" href="/bmbp/ui/lib/arco/arco.min.css" />
         <link rel="stylesheet" href="/bmbp/ui/lib/bmbp/bmbp.css" />
         <link rel="stylesheet" href="/bmbp/ui/home/css/bmbp-home.css" />
@@ -10,6 +12,11 @@
     <body>
         <div id="app"></div>
     </body>
+    <script>
+        const AppTitle = '{{ systemAppTitle }}';
+        const AppIcon = '{{ systemAppIcon }}';
+        const AppCopyRight = '{{ systemAppCopyright }}';
+    </script>
     <script src="/bmbp/ui/lib/react/react.production.min.js"></script>
     <script src="/bmbp/ui/lib/react/react-dom.production.min.js"></script>
     <script src="/bmbp/ui/lib/react/react-dom.profiling.min.js"></script>
