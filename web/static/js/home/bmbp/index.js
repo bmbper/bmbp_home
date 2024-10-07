@@ -11,12 +11,19 @@ var HomeAction = {
     const [contentSrc, setContentSrc] = React.useState("/home/welcome.view");
     HomeState.contentSrc = contentSrc;
     HomeState.setContentSrc = setContentSrc;
+    const [breadcrumbData, setBreadcrumbData] = React.useState(["\u6B22\u8FCE"]);
+    HomeState.breadcrumbData = breadcrumbData;
+    HomeState.setBreadcrumbData = setBreadcrumbData;
     const [currentUser, setCurrentUser] = React.useState({});
     HomeState.currentUser = currentUser;
     HomeState.setCurrentUser = setCurrentUser;
     const [selectMenu, setSelectMenu] = React.useState({});
     HomeState.selectMenu = selectMenu;
     HomeState.setSelectMenu = setSelectMenu;
+  },
+  onClickSiderMenu: (menu) => {
+    debugger;
+    console.log(menu);
   }
 };
 
@@ -91,30 +98,61 @@ var BmbpHeaderUser = () => {
   }, "A"))));
 };
 var BmbpSideNavMenu = () => {
+  const menuData = [
+    {
+      id: "1",
+      name: "\u9996\u9875",
+      namePath: "/\u9996\u9875"
+    },
+    {
+      id: "2",
+      name: "\u7CFB\u7EDF\u7BA1\u7406",
+      namePath: "/",
+      children: [
+        {
+          id: "3",
+          name: "\u89D2\u8272\u7BA1\u7406",
+          namePath: "/\u7CFB\u7EDF\u7BA1\u7406/\u89D2\u8272\u7BA1\u7406"
+        },
+        {
+          id: "5",
+          name: "\u7528\u6237\u7BA1\u7406",
+          namePath: "/\u7CFB\u7EDF\u7BA1\u7406/\u89D2\u8272\u7BA1\u7406"
+        }
+      ]
+    }
+  ];
+  HomeState.setSiderMenuData(menuData);
+  const genrateMenu = (menuArray) => {
+    return menuArray.map((item) => {
+      if (item.children && item.children.length > 0) {
+        return /* @__PURE__ */ React.createElement(arco.Menu.SubMenu, {
+          key: item.id,
+          title: item.name,
+          onClick: () => {
+            HomeAction.onClickSiderMenu(item);
+          }
+        }, genrateMenu(item.children));
+      } else {
+        return /* @__PURE__ */ React.createElement(arco.Menu.Item, {
+          key: item.id,
+          onClick: () => {
+            HomeAction.onClickSiderMenu(item);
+          }
+        }, item.name);
+      }
+    });
+  };
   return /* @__PURE__ */ React.createElement(arco.Menu, {
     className: "bmbp-layout-sider-menu"
-  }, /* @__PURE__ */ React.createElement(arco.Menu.Item, {
-    key: "1",
-    disabled: true
-  }, /* @__PURE__ */ React.createElement(arcoicon.IconHome, null), "\u8BBE\u8BA1\u6307\u5357"), /* @__PURE__ */ React.createElement(arco.Menu.Item, {
-    key: "2"
-  }, /* @__PURE__ */ React.createElement(arcoicon.IconCalendar, null), "\u533A\u5757"), /* @__PURE__ */ React.createElement(arco.Menu.Item, {
-    key: "3"
-  }, /* @__PURE__ */ React.createElement(arcoicon.IconCalendar, null), "\u6A21\u5757"), /* @__PURE__ */ React.createElement(arco.Menu.SubMenu, {
-    key: "layout",
-    title: /* @__PURE__ */ React.createElement("span", null, /* @__PURE__ */ React.createElement(arcoicon.IconCalendar, null), " \u5E03\u5C40\u7EC4\u4EF6")
-  }, /* @__PURE__ */ React.createElement(arco.Menu.Item, {
-    key: "11"
-  }, "\u6805\u683C"), /* @__PURE__ */ React.createElement(arco.Menu.Item, {
-    key: "12"
-  }, "\u5206\u9694\u7B26"), /* @__PURE__ */ React.createElement(arco.Menu.Item, {
-    key: "13"
-  }, "\u5E03\u5C40")));
+  }, genrateMenu(HomeState.siderMenuData));
 };
 var BmbpCenterTitle = () => {
   return /* @__PURE__ */ React.createElement("div", {
     className: "bmbp-layout-center-title"
-  }, /* @__PURE__ */ React.createElement(arco.Breadcrumb, null, /* @__PURE__ */ React.createElement(arco.Breadcrumb.Item, null, "\u9996\u9875"), /* @__PURE__ */ React.createElement(arco.Breadcrumb.Item, null, "\u7CFB\u7EDF\u7BA1\u7406"), /* @__PURE__ */ React.createElement(arco.Breadcrumb.Item, null, "\u7528\u6237\u7BA1\u7406")));
+  }, /* @__PURE__ */ React.createElement(arco.Breadcrumb, null, HomeState.breadcrumbData.map((item) => {
+    return /* @__PURE__ */ React.createElement(arco.Breadcrumb.Item, null, item);
+  })));
 };
 var BmbpCenterIFrame = () => {
   return /* @__PURE__ */ React.createElement("iframe", {

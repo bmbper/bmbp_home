@@ -4,7 +4,7 @@ window.onload = () => {
   const root = ReactDOM.createRoot(document.getElementById("app"));
   root.render(<BmbpHomeLayout />);
 };
-
+/// 主页
 const BmbpHomeLayout = () => {
   HomeAction.init();
   return (
@@ -17,7 +17,7 @@ const BmbpHomeLayout = () => {
         </arco.Layout.Header>
         <arco.Layout>
           <arco.Layout.Sider className="bmbp-layout-sider">
-            <BmbpSideNavMenu></BmbpSideNavMenu>
+            <BmbpSideNavMenu />
           </arco.Layout.Sider>
           <arco.Layout>
             <arco.Layout.Content className="bmbp-layout-center">
@@ -34,6 +34,7 @@ const BmbpHomeLayout = () => {
   );
 };
 
+/// 应用标题
 const BmbpHeaderTitle = () => {
   return (
     <div className="bmbp-layout-header-title">
@@ -42,9 +43,11 @@ const BmbpHeaderTitle = () => {
     </div>
   );
 };
+/// 应用导航
 const BmbpHeaderNav = () => {
   return <div className="bmbp-layout-header-center"></div>;
 };
+/// 右侧用户相关操作
 const BmbpHeaderUser = () => {
   const userDropList = (
     <arco.Menu>
@@ -83,48 +86,82 @@ const BmbpHeaderUser = () => {
     </div>
   );
 };
+/// 左则目录
 const BmbpSideNavMenu = () => {
+  const menuData = [
+    {
+      id: "1",
+      name: "首页",
+      namePath: "/首页",
+    },
+    {
+      id: "2",
+      name: "系统管理",
+      namePath: "/",
+      children: [
+        {
+          id: "3",
+          name: "角色管理",
+          namePath: "/系统管理/角色管理",
+        },
+        {
+          id: "5",
+          name: "用户管理",
+          namePath: "/系统管理/角色管理",
+        },
+      ],
+    },
+  ];
+  HomeState.setSiderMenuData(menuData);
+  const genrateMenu = (menuArray: any[]) => {
+    return menuArray.map((item: any) => {
+      if (item.children && item.children.length > 0) {
+        return (
+          <arco.Menu.SubMenu
+            key={item.id}
+            title={item.name}
+            onClick={() => {
+              HomeAction.onClickSiderMenu(item);
+            }}
+          >
+            {genrateMenu(item.children)}
+          </arco.Menu.SubMenu>
+        );
+      } else {
+        return (
+          <arco.Menu.Item
+            key={item.id}
+            onClick={() => {
+              HomeAction.onClickSiderMenu(item);
+            }}
+          >
+            {item.name}
+          </arco.Menu.Item>
+        );
+      }
+    });
+  };
+
   return (
     <arco.Menu className="bmbp-layout-sider-menu">
-      <arco.Menu.Item key="1" disabled>
-        <arcoicon.IconHome />
-        设计指南
-      </arco.Menu.Item>
-      <arco.Menu.Item key="2">
-        <arcoicon.IconCalendar />
-        区块
-      </arco.Menu.Item>
-      <arco.Menu.Item key="3">
-        <arcoicon.IconCalendar />
-        模块
-      </arco.Menu.Item>
-      <arco.Menu.SubMenu
-        key="layout"
-        title={
-          <span>
-            <arcoicon.IconCalendar /> 布局组件
-          </span>
-        }
-      >
-        <arco.Menu.Item key="11">栅格</arco.Menu.Item>
-        <arco.Menu.Item key="12">分隔符</arco.Menu.Item>
-        <arco.Menu.Item key="13">布局</arco.Menu.Item>
-      </arco.Menu.SubMenu>
+      {genrateMenu(HomeState.siderMenuData)}
     </arco.Menu>
   );
 };
 
+/// 面包屑
 const BmbpCenterTitle = () => {
   return (
     <div className="bmbp-layout-center-title">
       <arco.Breadcrumb>
-        <arco.Breadcrumb.Item>首页</arco.Breadcrumb.Item>
-        <arco.Breadcrumb.Item>系统管理</arco.Breadcrumb.Item>
-        <arco.Breadcrumb.Item>用户管理</arco.Breadcrumb.Item>
+        {HomeState.breadcrumbData.map((item: any) => {
+          return <arco.Breadcrumb.Item>{item}</arco.Breadcrumb.Item>;
+        })}
       </arco.Breadcrumb>
     </div>
   );
 };
+/// 中间嵌套页面
 const BmbpCenterIFrame = () => {
   return (
     <iframe

@@ -13,6 +13,12 @@ const HomeAction = {
     const [contentSrc, setContentSrc] = React.useState("/home/welcome.view");
     HomeState.contentSrc = contentSrc;
     HomeState.setContentSrc = setContentSrc;
+
+    /// 面包屑
+    const [breadcrumbData, setBreadcrumbData] = React.useState(["欢迎"]);
+    HomeState.breadcrumbData = breadcrumbData;
+    HomeState.setBreadcrumbData = setBreadcrumbData;
+
     /// 用户信息
     const [currentUser, setCurrentUser] = React.useState({});
     HomeState.currentUser = currentUser;
@@ -21,6 +27,10 @@ const HomeAction = {
     const [selectMenu, setSelectMenu] = React.useState({});
     HomeState.selectMenu = selectMenu;
     HomeState.setSelectMenu = setSelectMenu;
+  },
+  onClickSiderMenu: (menu) => {
+    debugger;
+    console.log(menu);
   },
 };
 export { HomeAction, HomeState };
