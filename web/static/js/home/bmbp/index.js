@@ -2,9 +2,21 @@
 var HomeState = {};
 var HomeAction = {
   init: () => {
-    const [contentSrc, setContentSrc] = React.useState("");
+    const [siderMenuData, setSiderMenuData] = React.useState([]);
+    HomeState.siderMenuData = siderMenuData;
+    HomeState.setSiderMenuData = setSiderMenuData;
+    const [navMenuData, setNavMenuData] = React.useState([]);
+    HomeState.navMenuData = navMenuData;
+    HomeState.setNavMenuData = setNavMenuData;
+    const [contentSrc, setContentSrc] = React.useState("/home/welcome.view");
     HomeState.contentSrc = contentSrc;
     HomeState.setContentSrc = setContentSrc;
+    const [currentUser, setCurrentUser] = React.useState({});
+    HomeState.currentUser = currentUser;
+    HomeState.setCurrentUser = setCurrentUser;
+    const [selectMenu, setSelectMenu] = React.useState({});
+    HomeState.selectMenu = selectMenu;
+    HomeState.setSelectMenu = setSelectMenu;
   }
 };
 
@@ -105,7 +117,6 @@ var BmbpCenterTitle = () => {
   }, /* @__PURE__ */ React.createElement(arco.Breadcrumb, null, /* @__PURE__ */ React.createElement(arco.Breadcrumb.Item, null, "\u9996\u9875"), /* @__PURE__ */ React.createElement(arco.Breadcrumb.Item, null, "\u7CFB\u7EDF\u7BA1\u7406"), /* @__PURE__ */ React.createElement(arco.Breadcrumb.Item, null, "\u7528\u6237\u7BA1\u7406")));
 };
 var BmbpCenterIFrame = () => {
-  HomeState.setContentSrc("/login.view");
   return /* @__PURE__ */ React.createElement("iframe", {
     src: HomeState.contentSrc,
     className: "bmbp-layout-center-iframe"

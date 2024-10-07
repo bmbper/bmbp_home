@@ -126,7 +126,6 @@ const BmbpCenterTitle = () => {
   );
 };
 const BmbpCenterIFrame = () => {
-  HomeState.setContentSrc("/login.view");
   return (
     <iframe
       src={HomeState.contentSrc}

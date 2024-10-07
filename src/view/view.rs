@@ -16,6 +16,13 @@ pub async fn home_view(_: &mut Request, resp: &mut Response) {
 }
 
 #[handler]
+pub async fn welcome_view(_: &mut Request, depot: &mut Depot, resp: &mut Response) {
+    let ctx = ctx_init();
+    let view_html = "home/welcome.html";
+    resp.render(Text::Html((*CTX_TERA).render(view_html, &ctx).unwrap()));
+}
+
+#[handler]
 pub async fn login_view(_: &mut Request, resp: &mut Response) {
     let ctx = ctx_init();
     let view_html = "login/bmbp.html";
